@@ -1,6 +1,10 @@
 package ir.ac.sbu.dbms.common.transaction;
 
 import ir.ac.sbu.dbms.common.database.DB;
+import ir.ac.sbu.dbms.common.operation.AbstractOperation;
+import ir.ac.sbu.dbms.common.operation.comparator.SerialComparator;
+import ir.ac.sbu.dbms.common.operation.graph.OperationGraph;
+import ir.ac.sbu.dbms.common.operation.graph.OperationNode;
 import ir.ac.sbu.dbms.common.serializable.Serializable;
 
 import java.util.*;
@@ -27,7 +31,21 @@ public class Schedule {
         return db;
     }
 
-    private Schedule getSerialSchedule() {
+    public OperationGraph getConflictPrecedenceGraph() {
+        Set<OperationNode> resultNodes = new HashSet<>();
+        for (int i = 0; i < operations.size(); i++) {
+            Set<AbstractOperation> hasConflictOperations = new HashSet<>();
+            for (int j = i + 1; j < operations.size(); j++) {
+                if (operations.get(i).hasConflict(operations.get(j))) {
+                    hasConflictOperations.add(operations.get(j));
+                }
+            }
+            resultNodes.add(new OperationNode(operations.get(i), hasConflictOperations));
+        }
+        return new OperationGraph(resultNodes);
+    }
+
+    public Schedule getSerialSchedule() {
         DB serialScheduleDb = DB.getSnapshot();
         List<AbstractOperation> serialScheduleOperations = new ArrayList<>(operations);
         serialScheduleOperations.sort(new SerialComparator());

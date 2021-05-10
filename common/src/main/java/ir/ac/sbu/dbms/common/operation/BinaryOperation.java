@@ -1,7 +1,9 @@
-package ir.ac.sbu.dbms.common.transaction;
+package ir.ac.sbu.dbms.common.operation;
 
 import ir.ac.sbu.dbms.common.database.DB;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 public class BinaryOperation extends AbstractOperation {
@@ -53,5 +55,18 @@ public class BinaryOperation extends AbstractOperation {
                 throw new RuntimeException("Unknown operator " + operator);
         }
         transactionMemoryData.put(result, resultValue);
+    }
+
+    @Override
+    protected List<String> getWorkingVariables() {
+        List<String> workingVariables = new ArrayList<>();
+        workingVariables.add(result);
+        if (!op1.matches("^\\d+$")) {
+            workingVariables.add(op1);
+        }
+        if (!op2.matches("^\\d+$")) {
+            workingVariables.add(op2);
+        }
+        return workingVariables;
     }
 }

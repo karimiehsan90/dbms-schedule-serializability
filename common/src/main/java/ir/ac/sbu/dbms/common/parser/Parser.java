@@ -1,6 +1,8 @@
 package ir.ac.sbu.dbms.common.parser;
 
 import ir.ac.sbu.dbms.common.database.DB;
+import ir.ac.sbu.dbms.common.operation.*;
+import ir.ac.sbu.dbms.common.operation.comparator.OperatorIdComparator;
 import ir.ac.sbu.dbms.common.transaction.*;
 
 import java.util.ArrayList;

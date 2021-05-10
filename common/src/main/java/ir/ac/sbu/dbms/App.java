@@ -2,7 +2,7 @@ package ir.ac.sbu.dbms;
 
 import ir.ac.sbu.dbms.common.database.DB;
 import ir.ac.sbu.dbms.common.parser.Parser;
-import ir.ac.sbu.dbms.common.serializable.ResultSerializable;
+import ir.ac.sbu.dbms.common.serializable.ConflictSerializable;
 import ir.ac.sbu.dbms.common.transaction.Schedule;
 
 // TODO remove. It's for test now
@@ -24,6 +24,8 @@ public class App {
         DB db = DB.getInstance();
         Parser parser = new Parser();
         Schedule schedule = parser.parse(db, inputLines);
-        System.out.println(schedule.isSerializable(new ResultSerializable()));
+        System.out.println(schedule.getConflictPrecedenceGraph());
+        System.out.println(schedule.getSerialSchedule().getConflictPrecedenceGraph());
+        System.out.println(schedule.isSerializable(new ConflictSerializable()));
     }
 }

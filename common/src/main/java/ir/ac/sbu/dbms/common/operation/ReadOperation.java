@@ -1,7 +1,9 @@
-package ir.ac.sbu.dbms.common.transaction;
+package ir.ac.sbu.dbms.common.operation;
 
 import ir.ac.sbu.dbms.common.database.DB;
 
+import java.util.Collections;
+import java.util.List;
 import java.util.Map;
 
 public class ReadOperation extends AbstractOperation {
@@ -15,5 +17,10 @@ public class ReadOperation extends AbstractOperation {
     @Override
     public void operate(DB db, Map<String, Integer> transactionMemoryData) {
         transactionMemoryData.put(variable, db.read(variable));
+    }
+
+    @Override
+    protected List<String> getWorkingVariables() {
+        return Collections.singletonList(variable);
     }
 }

@@ -1,4 +1,6 @@
-package ir.ac.sbu.dbms.common.transaction;
+package ir.ac.sbu.dbms.common.operation.comparator;
+
+import ir.ac.sbu.dbms.common.operation.AbstractOperation;
 
 import java.util.Comparator;
 
